@@ -2,7 +2,7 @@ var Boom = require('boom');
 var murmurhash = require('murmurhash');
 var crypto = require('crypto');
 var fixtures = require('../fixtures.js');
-var Promise = require('bluebird');
+var Promise = require('promise');
 var assert = require('assert');
 
 module.exports = function (server) {

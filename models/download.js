@@ -1,5 +1,5 @@
 var request = require('request');
-var Promise = require('bluebird');
+var Promise = require('promise');
 var _ = require('lodash');
 var fmt = require('util').format;
 var URL = require('url');
