@@ -350,7 +350,7 @@ describe('POST /settings/billing/cancel', function () {
 
   before(function(done) {
     options = {
-      method: 'post',
+      method: 'POST',
       url: '/settings/billing/cancel'
     };
     done();

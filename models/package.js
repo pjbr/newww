@@ -27,12 +27,13 @@ Package.prototype.get = function(name, options) {
 
   return new Promise(function(resolve, reject) {
     var opts = {
+      method: "GET",
       url: url,
       json: true,
       headers: {bearer: _this.bearer}
     };
 
-    request.get(opts, function(err, resp, body) {
+    request(opts, function(err, resp, body) {
       if (err) return reject(err);
 
       if (resp.statusCode > 399) {
@@ -61,11 +62,12 @@ Package.prototype.list = function(options) {
 
   return new Promise(function(resolve, reject) {
     var opts = {
+      method: "GET",
       url: url,
       json: true
     };
 
-    request.get(opts, function(err, resp, body) {
+    request(opts, function(err, resp, body) {
       if (err) return reject(err);
 
       if (resp.statusCode > 399) {
@@ -84,10 +86,11 @@ Package.prototype.count = function() {
   var url = fmt("%s/package/-/count", this.host);
   return new Promise(function(resolve, reject) {
     var opts = {
+      method: "GET",
       url: url,
       json: true
     };
-    request.get(opts, function(err, resp, body) {
+    request(opts, function(err, resp, body) {
       if (err) return reject(err);
       if (resp.statusCode > 399) {
         err = Error('error getting package count');

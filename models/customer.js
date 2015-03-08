@@ -14,7 +14,7 @@ Customer.new = function() {
 Customer.prototype.get = function(name, callback) {
   var url = this.host + '/stripe/' + name;
 
-  request.get({url: url, json: true}, function(err, resp, body){
+  request({method: "GET", url: url, json: true}, function(err, resp, body){
 
     if (err) { return callback(err); }
 
@@ -50,7 +50,7 @@ Customer.prototype.update = function(body, callback) {
     // Create new customer
     if (err && err.statusCode === 404) {
       url = self.host + '/stripe';
-      return request.put({url: url, json: true, body: body}, function(err, resp, body){
+      return request({method: "PUT", url: url, json: true, body: body}, function(err, resp, body){
         return err ? callback(err) : callback(null, body);
       });
     }
@@ -60,7 +60,7 @@ Customer.prototype.update = function(body, callback) {
 
     // Update existing customer
     url = self.host + '/stripe/' + body.name;
-    return request.post({url: url, json: true, body: body}, function(err, resp, body){
+    return request({method: "POST", url: url, json: true, body: body}, function(err, resp, body){
       return err ? callback(err) : callback(null, body);
     });
 
@@ -69,7 +69,7 @@ Customer.prototype.update = function(body, callback) {
 
 Customer.prototype.del = function(name, callback) {
   var url = this.host + '/stripe/' + name;
-  request.del({url: url, json: true}, function(err, resp, body){
+  request({method: "DELETE", url: url, json: true}, function(err, resp, body){
     return err ? callback(err) : callback(null, body);
   });
 };

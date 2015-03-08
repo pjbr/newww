@@ -33,6 +33,7 @@ User.prototype.confirmEmail = function (user, callback) {
 
   return new Promise(function(resolve, reject) {
     var opts = {
+      method: "POST",
       url: url,
       json: true,
       body: {
@@ -40,7 +41,7 @@ User.prototype.confirmEmail = function (user, callback) {
       }
     };
 
-    request.post(opts, function (err, resp, body) {
+    request(opts, function (err, resp, body) {
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
         err = Error('error verifying user ' + user.name);
@@ -56,7 +57,8 @@ User.prototype.login = function(loginInfo, callback) {
   var url = fmt("%s/user/%s/login", this.host, loginInfo.name);
 
   return new Promise(function (resolve, reject) {
-    request.post({
+    request({
+      method: "POST",
       url: url,
       json: true,
       body: {
@@ -94,8 +96,14 @@ User.prototype.get = function(name, options, callback) {
   }
 
   return new Promise(function(resolve, reject) {
-    request.get({url: url, json: true}, function(err, resp, body){
-      if (err) { return reject(err); }
+    request({
+      method: "GET",
+      url: url,
+      json: true
+    }, function(err, resp, body) {
+      if (err) {
+        return reject(err);
+      }
       if (resp.statusCode > 399) {
         err = Error('error getting user ' + name);
         err.statusCode = resp.statusCode;
@@ -126,6 +134,7 @@ User.prototype.getPackages = function(name, callback) {
 
   return new Promise(function(resolve, reject) {
     var opts = {
+      method: "GET",
       url: url,
       qs: {
         per_page: 9999
@@ -134,7 +143,7 @@ User.prototype.getPackages = function(name, callback) {
       headers: {bearer: _this.bearer}
     };
 
-    request.get(opts, function(err, resp, body){
+    request(opts, function(err, resp, body){
 
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
@@ -153,12 +162,13 @@ User.prototype.getStars = function(name, callback) {
 
   return new Promise(function(resolve, reject) {
     var opts = {
+      method: "GET",
       url: url,
       json: true,
       headers: {bearer: _this.bearer}
     };
 
-    request.get(opts, function(err, resp, body){
+    request(opts, function(err, resp, body){
 
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
@@ -182,7 +192,8 @@ User.prototype.login = function(loginInfo, callback) {
 
   return new Promise(function (resolve, reject) {
 
-    request.post({
+    request({
+      method: "POST",
       url: url,
       json: true,
       body: {
@@ -223,7 +234,7 @@ User.prototype.lookupEmail = function(email, callback) {
     var url = _this.host + "/user/" + email;
     _this.log(url);
 
-    request.get({url: url, json: true}, function (err, resp, body) {
+    request({method: "GET", url: url, json: true}, function (err, resp, body) {
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
         err = Error('error looking up username(s) for ' + email);
@@ -241,12 +252,13 @@ User.prototype.save = function (user, callback) {
 
   return new Promise(function (resolve, reject) {
     var opts = {
+      method: "POST",
       url: url,
       json: true,
       body: user
     };
 
-    request.post(opts, function (err, resp, body) {
+    request(opts, function (err, resp, body) {
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
         err = Error('error updating profile for ' + user.name);
@@ -277,12 +289,13 @@ User.prototype.signup = function (user, callback) {
 
   return new Promise(function (resolve, reject) {
     var opts = {
+      method: "PUT",
       url: url,
       body: user,
       json: true
     };
 
-    request.put(opts, function (err, resp, body) {
+    request(opts, function (err, resp, body) {
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
         err = Error('error creating user ' + user.name);

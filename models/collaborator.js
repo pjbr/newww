@@ -22,7 +22,8 @@ Collaborator.prototype.list = function(package, callback) {
   var _this = this;
   var url = fmt("%s/package/%s/collaborators", this.host, package);
   return new Promise(function(resolve, reject) {
-    request.get({
+    request({
+        method: "GET",
         url: url,
         json: true,
         headers: {
@@ -53,7 +54,8 @@ Collaborator.prototype.add = function(package, collaborator, callback) {
   var url = fmt("%s/package/%s/collaborators", this.host, package);
 
   return new Promise(function(resolve, reject) {
-    request.put({
+    request({
+      method: "PUT",
       url: url,
       json: true,
       headers: {
@@ -79,7 +81,8 @@ Collaborator.prototype.update = function(package, collaborator, callback) {
   var url = fmt("%s/package/%s/collaborators/%s", this.host, package, collaborator.name);
 
   return new Promise(function(resolve, reject) {
-    request.post({
+    request({
+      method: "POST",
       url: url,
       json: true,
       headers: {
@@ -105,7 +108,7 @@ Collaborator.prototype.del = function(package, collaboratorName, callback) {
   var url = fmt("%s/package/%s/collaborators/%s", this.host, package, collaboratorName);
 
   return new Promise(function (resolve, reject) {
-    request.del({url: url, json: true, headers: {bearer: _this.bearer}}, function(err, resp, body){
+    request({method: "DELETE", url: url, json: true, headers: {bearer: _this.bearer}}, function(err, resp, body){
       if (err) { return reject(err); }
       if (resp.statusCode > 399) {
         err = Error('error removing collaborator from package: ' + package);
