@@ -150,7 +150,7 @@
     <p class="list-of-links">
       {{#each dependents}}
         {{#if @last}}
-          <a href="/package/{{name}}">{{name}}</a>
+          <a href="/browse/depended/{{./name}}">{{name}}</a>
         {{else}}
           <a href="/package/{{name}}">{{name}}</a>,
         {{/if}}
